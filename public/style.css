@@ -1,0 +1,326 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1e1e2e;
+  --surface: #27273a;
+  --border: #3a3a52;
+  --text: #cdd6f4;
+  --text-dim: #6c7086;
+  --accent: #89b4fa;
+  --accent-hover: #74c7ec;
+  --green: #a6e3a1;
+  --yellow: #f9e2af;
+  --red: #f38ba8;
+  --header-h: 48px;
+  --footer-h: 60px;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.hidden { display: none !important; }
+
+/* ── Config Screen ── */
+#config-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.config-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.config-box h1 { font-size: 1.3rem; color: var(--accent); }
+.config-box label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+.config-box input {
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+}
+.config-box input:focus { border-color: var(--accent); }
+.config-box button {
+  padding: 10px;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.config-box button:hover { background: var(--accent-hover); }
+.error { color: var(--red); font-size: 0.85rem; }
+
+/* ── App layout ── */
+#app-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.app-title { font-weight: 700; font-size: 1rem; color: var(--accent); }
+.icon-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-dim);
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.progress-summary { margin-left: auto; font-size: 0.85rem; color: var(--text-dim); }
+
+/* ── Editors row ── */
+.editors-row {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  gap: 0;
+}
+.editor-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+}
+.editor-pane:last-child { border-right: none; }
+
+.pane-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  min-height: 40px;
+  flex-wrap: wrap;
+}
+.pane-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+.file-path {
+  font-size: 0.82rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.new-file-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.new-file-controls select,
+.new-file-controls input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text);
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  outline: none;
+}
+.new-file-controls select:focus,
+.new-file-controls input:focus { border-color: var(--accent); }
+#new-subfolder { width: 140px; }
+#new-filename { width: 200px; }
+
+.editor-container {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+/* CodeMirror fills the container */
+.editor-container .cm-editor {
+  height: 100%;
+  font-size: 13px;
+}
+.editor-container .cm-scroller {
+  overflow: auto;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ── Footer ── */
+footer {
+  height: var(--footer-h);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+.footer-left { display: flex; gap: 8px; }
+.footer-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+.footer-right { display: flex; gap: 8px; }
+
+button {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+button:hover { border-color: var(--accent); color: var(--accent); }
+button.danger { border-color: var(--red); color: var(--red); }
+button.danger:hover { background: var(--red); color: var(--bg); }
+button.primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+.progress-bar-wrap {
+  width: 100%;
+  max-width: 320px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+.progress-detail { font-size: 0.78rem; color: var(--text-dim); }
+
+/* ── Existing file indicator ── */
+.existing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--accent);
+  padding: 2px 0;
+  width: 100%;
+}
+.existing-indicator span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── File picker dialog ── */
+#existing-file-dialog {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0;
+  color: var(--text);
+  width: 520px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+}
+#existing-file-dialog::backdrop {
+  background: rgba(0,0,0,0.6);
+}
+.dialog-header {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.dialog-header input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  outline: none;
+}
+.dialog-header input:focus { border-color: var(--accent); }
+#existing-file-list {
+  list-style: none;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  flex: 1;
+}
+#existing-file-list li {
+  padding: 7px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#existing-file-list li:hover { background: var(--border); color: var(--accent); }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  z-index: 100;
+  transition: opacity 0.3s;
+}
+.toast.warn { border-color: var(--yellow); color: var(--yellow); }
+.toast.ok { border-color: var(--green); color: var(--green); }
+.toast.err { border-color: var(--red); color: var(--red); }

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Obsidian Cleaner</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+<!-- Config Screen -->
+<div id="config-screen" class="hidden">
+  <div class="config-box">
+    <h1>Obsidian Cleaner — Setup</h1>
+    <label>Old Vault Path
+      <input type="text" id="cfg-old" placeholder="C:/Users/you/Obsidian/Archive" />
+    </label>
+    <label>New Vault Path
+      <input type="text" id="cfg-new" placeholder="C:/Users/you/Obsidian/Vault" />
+    </label>
+    <label>Templates Path
+      <input type="text" id="cfg-templates" placeholder="C:/Users/you/Obsidian/Vault/Templates" />
+    </label>
+    <div id="cfg-error" class="error hidden"></div>
+    <button id="cfg-save">Save & Start</button>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="app-screen" class="hidden">
+  <header>
+    <span class="app-title">Obsidian Cleaner</span>
+    <button id="btn-settings" class="icon-btn" title="Settings">⚙ Settings</button>
+    <span id="progress-summary" class="progress-summary"></span>
+  </header>
+
+  <div class="editors-row">
+    <!-- Left: old file -->
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span class="pane-label">OLD FILE</span>
+        <span id="old-path" class="file-path"></span>
+      </div>
+      <div id="old-editor" class="editor-container"></div>
+    </div>
+
+    <!-- Right: new file -->
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span class="pane-label">NEW FILE</span>
+        <div class="new-file-controls">
+          <select id="template-select">
+            <option value="">— select type —</option>
+          </select>
+          <input type="text" id="new-subfolder" placeholder="subfolder (optional)" />
+          <input type="text" id="new-filename" placeholder="filename.md" />
+          <button id="btn-load-existing" class="icon-btn">Load existing…</button>
+        </div>
+        <div id="existing-file-indicator" class="existing-indicator hidden">
+          <span id="existing-file-label"></span>
+          <button id="btn-clear-existing" class="icon-btn">✕ clear</button>
+        </div>
+      </div>
+      <div id="new-editor" class="editor-container"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-left">
+      <button id="btn-skip" title="Ctrl+→">Skip</button>
+      <button id="btn-ignore" title="Ctrl+D">Ignore</button>
+      <button id="btn-delete" class="danger" title="Ctrl+Delete">Delete</button>
+    </div>
+    <div class="footer-center">
+      <div class="progress-bar-wrap">
+        <div id="progress-bar" class="progress-bar-fill"></div>
+      </div>
+      <span id="progress-detail" class="progress-detail"></span>
+    </div>
+    <div class="footer-right">
+      <button id="btn-save" class="primary" title="Ctrl+Enter">Save &amp; Next →</button>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <dialog id="existing-file-dialog">
+    <div class="dialog-header">
+      <input type="text" id="existing-filter" placeholder="Filter files…" autocomplete="off" />
+      <button id="dialog-close" class="icon-btn">✕</button>
+    </div>
+    <ul id="existing-file-list"></ul>
+  </dialog>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
